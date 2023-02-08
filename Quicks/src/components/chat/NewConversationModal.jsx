@@ -1,36 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { useContacts } from '../../contexts/ContactsProvider';
+import { useConversations } from '../../contexts/ConversationsProvider';
 
-export default function NewConversationModal() {
+export default function NewConversationModal({ closeModal }) {
+  const [selectedContactIds, setSelectedContactIds] = useState([]);
+  const { contacts } = useContacts();
+  const { createConversation } = useConversations();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    createConversation(selectedContactIds);
+    closeModal();
+  }
+
+  function handleCheckboxChange(contactId) {
+    setSelectedContactIds((prevSelectedContactIds) => {
+      if (prevSelectedContactIds.includes(contactId)) {
+        return prevSelectedContactIds.filter((prevId) => {
+          return contactId !== prevId;
+        });
+      } else {
+        return [...prevSelectedContactIds, contactId];
+      }
+    });
+  }
   return (
-    <div className="fixed top-0 left-0 hidden overflow-x-hidden overflow-y-auto" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
-      <div className="relative pointer-events-none">
-        <div className="relative flex flex-col pointer-events-auto bg-white bg-clip-padding rounded-md shadow-lg">
-          <div className="flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-            <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
-              Modal title
-            </h5>
-            <button type="button" className="w-4 h-4 p-1 text-black border-none rounded-none opacity-50 hover:text-black hover:opacity-75 hover:no-underline" data-toggle="modal" aria-label="Close"></button>
-          </div>
-          <div className="p-4">
-            <p>This is a vertically centered modal.</p>
-          </div>
-          <div className="flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-            <button
-              type="button"
-              className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-              data-toggle="modal"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
-            >
-              Save changes
+    <>
+      <div className="flex h-screen items-center">
+        <div className="w-full border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
+          <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
+            <h1 className="text-xl font-normal">Create Conversation</h1>
+            <button className="bg-transparent border-0 text-black float-right" onClick={() => closeModal()}>
+              <AiOutlineCloseCircle className="text-red-700 opacity-7 h-6 w-6 text-xl block py-0 rounded" />
             </button>
           </div>
+
+          <form onSubmit={handleSubmit} className="flex flex-col">
+            {contacts.map((contact) => (
+              <div className="flex items-center" key={contact.id}>
+                <input type="checkbox" className="form-checkbox" value={selectedContactIds.includes(contact.id)} id={contact.id} onChange={() => handleCheckboxChange(contact.id)} />
+                <label className="ml-2" for={contact.id}>
+                  {contact.name}
+                </label>
+              </div>
+            ))}
+            <button className="bg-blue-500 text-white py-2 px-4 rounded" type="submit">
+              Create
+            </button>
+          </form>
         </div>
       </div>
-    </div>
+    </>
   );
 }

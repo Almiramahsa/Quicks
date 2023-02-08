@@ -17,7 +17,7 @@ export default function Sidebar({ id }) {
   }
 
   return (
-    <div id="sibedar-container" className="w-1/2 h-full shadow-md bg-white px-1 absolute">
+    <div id="sibedar-container" className="w-1/4 h-full shadow-md bg-white px-1 absolute left-0">
       <ul id="sidebar-list" className="relative mt-10 flex flex-row">
         <li className="relative">
           <a
@@ -62,7 +62,7 @@ export default function Sidebar({ id }) {
           New {conversationsOpen ? 'Conversation' : 'Contact'}{' '}
         </button>
         {modalOpen && (
-          <div id="modal" show={modalOpen} onClose={closeModal}>
+          <div id="modal" show={modalOpen.toString()} onClose={closeModal}>
             {conversationsOpen ? <NewConversationModal closeModal={closeModal} /> : <NewContactModal closeModal={closeModal} />}
           </div>
         )}

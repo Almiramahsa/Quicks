@@ -1,8 +1,8 @@
-import './assets/css/app.css';
+import '../../assets/css/app.css';
 import React, { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import AppHeader from './components/AppHeader';
-import AppContent from './components/AppContent';
+import AppHeader from '../../components/AppHeader';
+import AppContent from '../../components/AppContent';
 
 function Container({ children }) {
   return <div className="container">{children}</div>;
