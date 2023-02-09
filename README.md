@@ -1,1 +1,2 @@
-# -Quicks
+# Quicks
+Quicks is an innovative pop-up tool that combines two essential productivity features in one user-friendly interface. The alternating tools, Messaging and To-Do List, provide a seamless experience for users to stay organized and communicate effectively. The sleek design of Quicks makes it a visually appealing tool that is easy to navigate, allowing users to maximize their productivity in no time. With its dynamic features, Quicks is a must-have tool for anyone looking to streamline their workflow and stay on top of their tasks and messages. Check out the design now at https://bit.ly/simpul-front-end-challenge-quicks and experience the power of simplicity in productivity.
